@@ -2,18 +2,40 @@ import axios from 'axios'
 
 const baseUrl = "http://localhost:4000"
 
-const getAllToDo = async (setToDo) => {
+const baseApiResponse = (data, isSuccess) => {
+    return {
+      success: isSuccess,
+      data: data || null,
+    };
+  };
+
+// const getAllToDo = async (setToDo) => {
+//     try {
+//         const response = await axios.get(baseUrl);
+
+//         console.log('data ---> ', response.data)
+//         setToDo(response.data)
+//         setCount(1)
+//     } catch (error) {
+//         console.log("Internal server error");
+//     }
+// }
+
+
+const getAllToDo = async () => {
     try {
         const response = await axios.get(baseUrl);
 
         console.log('data ---> ', response.data)
-        setToDo(response.data)
+        return baseApiResponse(response.data, true);
     } catch (error) {
         console.log("Internal server error");
+        return baseApiResponse(null, false);
     }
 }
 
 const addToDo = async (text, setText) => {
+    
     try {
         if (text.length == 0) {
             alert("Field cannot be blank!")

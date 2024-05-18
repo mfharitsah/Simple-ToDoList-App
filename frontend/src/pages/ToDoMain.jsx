@@ -8,11 +8,30 @@ const ToDoMain = () => {
     const [text, setText] = useState("")
     const [isUpdating, setIsUpdating] = useState(false)
     const [toDoId, setToDoId] = useState("")
+    
+    const WAIT_TIME = 3000;
     const toDoDeleted = []
 
+    const fetchToDoList = async () => {
+        const apiResponse = await getAllToDo();
+
+        if (apiResponse) {
+            //See the result in the console from the browser
+            console.log("Response In App");
+            console.log(apiResponse.data);
+      
+            setToDo(apiResponse.data);
+          } else {
+            alert("Failed to fetch list");
+          }
+    }
+
     useEffect(() => {
-        getAllToDo(setToDo)
-    }, [])
+        const id = setInterval(() => {
+            fetchToDoList()
+        }, WAIT_TIME);
+        return () => clearInterval(id)
+    }, [toDo])
 
     const updateMode = (_id, text) => {
         setIsUpdating(true)
@@ -32,7 +51,6 @@ const ToDoMain = () => {
                         updateToDo={() => updateMode(todo._id, todo.text)}
                         deleteToDo={() => {
                             deleteToDo(todo._id)
-                            toDoDeleted.push(todo.text)
                         }}
                     />
                 ))
