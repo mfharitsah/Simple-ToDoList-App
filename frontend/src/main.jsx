@@ -3,18 +3,27 @@ import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
 
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom";
 import ToDoMain from './pages/ToDoMain.jsx';
 import Welcome from './pages/Welcome.jsx';
 
 const router = createBrowserRouter([
   {
-    path: "/",
-    element: <Welcome />,
+    element: <App />,
+    children: [
+      {
+        path: "/home",
+        element: <Welcome />,
+      },
+      {
+        path: "/to-do",
+        element: <ToDoMain />
+      }
+    ]
   },
   {
-    path: "/to-do",
-    element: <ToDoMain />
+    path: "/",
+    element: <Navigate to="/home" />,
   }
 
 ]);

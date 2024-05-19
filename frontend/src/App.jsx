@@ -1,15 +1,17 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { Outlet, ScrollRestoration } from "react-router-dom"
+
 import './App.css'
-import ToDoMain from './pages/ToDoMain'
+import Navbar from './components/Navbar'
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
     <>
-      < ToDoMain />
+      <ScrollRestoration />
+      <Navbar />
+      <Outlet />
     </>
   )
 }
